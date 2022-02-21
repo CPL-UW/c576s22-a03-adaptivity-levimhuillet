@@ -323,7 +323,11 @@ public class GMScript : MonoBehaviour
         if (CheckKillChunk())
         {
             _inARow++;
-            MakeRandomAngryChunk();
+
+		// ADAPTIVITY: at higher levels of difficulty (3+), more random chunks will spawn each time
+		for (int i = 0; i < _difficulty; i+=2) {
+			MakeRandomAngryChunk();
+		}
         }
         else _inARow = 0;
         infoText.text = $"PTS:{_score}\n\nMAX:{_difficulty}\n\nCURRIC\n576";
@@ -336,11 +340,17 @@ public class GMScript : MonoBehaviour
         if (!_initialized) SetupBaseBoard();
         if (null == _myPiece)
         {
-            if (!MakeNewPiece(0,_maxBy))
+		if (!MakeNewPiece(0,_maxBy))
             {   
-                Debug.Log("NO VALID MOVE");
-                Debug.Break();
+            	Debug.Log("NO VALID MOVE");
+            	Debug.Break();
             }
+
+		// ADAPTIVITY: at a high enough level (4+), random chunks will spawn every block,
+		// not just on completion of a row
+		if (_difficulty > 3) {
+			MakeRandomAngryChunk();	
+		}
         }
         
         
@@ -364,6 +374,4 @@ public class GMScript : MonoBehaviour
             DrawPiece();
         }
     } 
-    
-   
 }

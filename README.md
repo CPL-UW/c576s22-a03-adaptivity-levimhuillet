@@ -6,6 +6,3 @@
 4. Hit run?
 
 Apologies for the mess. YMMV.
-
-
-This README has been edited by Levi Huillet to ensure the workflow through github is working.
